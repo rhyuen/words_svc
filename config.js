@@ -18,10 +18,10 @@ exports.extServices = () => {
     };
 
     const prodSvcURLS = {
-        auth: "",
-        quotes: "",
+        auth: "ryauth.now.sh",
+        quotes: "ryquotes.now.sh",
         opendata: "",
-        words: ""
+        words: "rywords.now.sh"
     };    
     console.log("ext services: " + process.env.NODE_ENV);
     return process.env.NODE_ENV === "dev" ? devSvcURLS : prodSvcURLS;

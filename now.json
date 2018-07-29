@@ -1,0 +1,16 @@
+{
+    "name": "rywords",
+    "alias": [
+        "rywords"
+    ],
+    "env": {
+        "db": "@words_db",
+        "jwtSecret": "@jwt_secret",
+        "cookieSecret": "@cookie_secret"
+    },
+    "engines": {
+        "node": "^10"
+    },
+    "publie": true,
+    "type": "npm"
+}

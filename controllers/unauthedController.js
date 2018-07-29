@@ -2,8 +2,9 @@ const wrapAsync = require("../common/util.js");
 
 exports.index = wrapAsync(async (req, res) => {        
     res.status(200).json({
-        route: "/",
-        message: "Learn more about words on the WORDS REST SERVCIE",
+        date: new Date().toLocaleString(),        
+        route: req.url,
+        message: "Learn more about words on the WORDS REST SERVICE.",
         routes: "Routes available are /"
     });    
 });
