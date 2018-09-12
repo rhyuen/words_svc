@@ -55,23 +55,29 @@ async function isTokenAuthedToRscStandAlone(req, res, next){
         console.log(validationResult);
         return next(); 
     }catch(e){
-        console.log("There was an AuthZ Error\n %s", e);
-        if(e.name === "JsonWebTokenError"){
+        if(process.env.NODE_ENV === "dev"){
+            console.log("There was an AuthZ Error\n %s", e);
+            if(e.name === "JsonWebTokenError"){
+                return res.status(401).json({
+                    message: "Wrong signature for your token.",
+                    error: e
+                });
+            }
+            if(e.name === "TokenExpiredError"){
+                return res.status(401).json({
+                    message: "You need to sign in. Your token is expired.",
+                    error: e
+                });
+            }                                  
             return res.status(401).json({
-                message: "Wrong signature for your token.",
+                message: "An unexpected case for your auth happened.",
                 error: e
+            });
+        }else{       
+            return res.status(401).json({
+                message: "Something went wrong.  We're on it!"                
             });
         }
-        if(e.name === "TokenExpiredError"){
-            return res.status(401).json({
-                message: "You need to sign in. Your token is expired.",
-                error: e
-            });
-        }                                         
-        return res.status(401).json({
-            message: "An unexpected case for your auth happened.",
-            error: e
-        });
     }    
 }
 

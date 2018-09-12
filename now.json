@@ -11,6 +11,6 @@
     "engines": {
         "node": "^10"
     },
-    "publie": true,
+    "public": true,
     "type": "npm"
 }
