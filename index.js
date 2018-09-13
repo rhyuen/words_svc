@@ -1,6 +1,6 @@
 const server = require("./server.js");
 const logger = require("./common/logger.js");
-const PORT = 9774;
+const PORT = process.env.PORT || 9774;
 
 process.on("uncaughtException", (err) => {    
     console.log("Uncaught Exception");
