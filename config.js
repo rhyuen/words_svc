@@ -1,7 +1,7 @@
 const nconf = require("nconf");
 nconf.file("./keys.json");
 
-exports.extServices = () => {
+exports.getExtServices = () => {
     const devSvcURLS = {
         auth: "http://localhost:5789",
         quotes: "http://localhost:9934",
@@ -19,7 +19,7 @@ exports.extServices = () => {
     return process.env.NODE_ENV === "dev" ? devSvcURLS : prodSvcURLS;
 } 
 
-exports.secrets = () => {
+exports.getSecrets = () => {
     const envTypes = ["dev", "prod", "test"];
     const currentEnv = process.env.NODE_ENV;
     if(envTypes.includes(currentEnv) === -1){

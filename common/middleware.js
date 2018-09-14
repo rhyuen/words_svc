@@ -9,13 +9,13 @@ module.exports = (app) => {
     app.use(bodyParser.json());
     app.use(bodyParser.urlencoded({extended: false}));
     app.use(morgan("dev")); 
-    mongoose.connection.openUri(config.secrets().db, {useNewUrlParser: true})
+    mongoose.connection.openUri(config.getSecrets().db, {useNewUrlParser: true})
         .once("open",  () => {            
             logger.info("DB Connection OPEN.");
         }).on("error", e => {            
             logger.error(`MONGODB ERROR: ${e}`);
         });
-    app.use(cookieParser(config.secrets().cookieSecret, {
+    app.use(cookieParser(config.getSecrets().cookieSecret, {
         httpOnly: true,
         maxAge: 3600
     }));   

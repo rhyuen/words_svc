@@ -14,7 +14,7 @@ const router = express.Router();
 //             console.log("No authorization header or no req.cookies['authservice_token'] %s", req.cookies['authservice_token']);        
 //             //TODO: if client is api, send error message
 //             //TODO: if client is browser, redirect.            
-//             return res.redirect(`${config.extServices().auth}/login`);            
+//             return res.redirect(`${config.getExtServices().auth}/login`);            
 //         }                
 //         const authTokenForHeader = req.cookies["authservice_token"] || req.headers.authorization;
                 
@@ -23,7 +23,7 @@ const router = express.Router();
 //             headers: {"Authorization": `Bearer ${authTokenForHeader}`}        
 //         };
         
-//         const authRes = await fetch(`${config.extServices().auth}/auth`, options);
+//         const authRes = await fetch(`${config.getExtServices().auth}/auth`, options);
 //         console.log("Result Status: %s | Result redirected from %s", authRes.status, authRes.url);
         
 //         if(authRes.status === 400 || authRes.status === 401){
@@ -48,7 +48,7 @@ async function isTokenAuthedToRscStandAlone(req, res, next){
         
         const identityToValidate = req.cookies["authservice_token"] || req.headers.authorization.split(" ")[1];
         console.log(identityToValidate);
-        const validationResult = await jwtVerify(identityToValidate, config.secrets().jwtSecret)
+        const validationResult = await jwtVerify(identityToValidate, config.getSecrets().jwtSecret)
             .catch(e => {
                 console.error("JWT token verification failed. Error: %s", e);            
             });                       
