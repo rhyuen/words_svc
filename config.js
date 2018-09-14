@@ -1,14 +1,6 @@
 const nconf = require("nconf");
 nconf.file("./keys.json");
 
-function getNodeEnv(){
-    const envTypes = ["dev", "prod", "test"];
-    const currentEnv = process.env.NODE_ENV;
-    if(envTypes.includes(currentEnv) === -1){
-        throw new Error(`NODE_ENV value of '${process.env.NODE_ENV}' is not one of 'dev', 'prod' or 'test'.`);
-    }
-    console.log("NODE_ENV for config is '%s'.", currentEnv);
-}
 exports.extServices = () => {
     const devSvcURLS = {
         auth: "http://localhost:5789",

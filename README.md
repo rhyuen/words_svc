@@ -1,14 +1,15 @@
 ### ABOUT
 
->  generic node.js service .
+>  node.js rest service that returns new words the user has learned.
 
+### Updates 
+
+> trying to make it Paas agnostic when talking to other services.
+
+# Making it Go
 ### INSTALL
 
 > npm install
-
-OR
-
-> yarn install
 
 ### DEPENDENCIES
 
@@ -16,12 +17,12 @@ OR
 
 ### RUNNING LOCALLY
 
-> yarn start
+> npm start
 
 ### BUILDING THE DOCKER IMAGE
 
-> docker build -t genericservice .
+> docker build -t words_service .
 
 ### RUNNING IN DOCKER
 
-> docker run -d -p 8080:9934 --name genericservice
+> docker run -d -p 8080:9774 --name words_service

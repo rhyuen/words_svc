@@ -5,38 +5,38 @@ const Word = require("../models/word.js");
 const {promisify} = require("util");
 const jwt = require("jsonwebtoken");
 const jwtVerify = promisify(jwt.verify);
-const {extServices, secrets} = require("../config.js");
+const config = require("../config.js");
 const router = express.Router();
 
-async function useAuthService(req, res, next){    
-    try{            
-        if(!req.headers.authorization && !req.cookies['authservice_token']){
-            console.log("No authorization header or no req.cookies['authservice_token'] %s", req.cookies['authservice_token']);        
-            //TODO: if client is api, send error message
-            //TODO: if client is browser, redirect.            
-            return res.redirect(`${extServices().auth}/login`);            
-        }                
-        const authTokenForHeader = req.cookies["authservice_token"] || req.headers.authorization;
+// async function useAuthService(req, res, next){    
+//     try{            
+//         if(!req.headers.authorization && !req.cookies['authservice_token']){
+//             console.log("No authorization header or no req.cookies['authservice_token'] %s", req.cookies['authservice_token']);        
+//             //TODO: if client is api, send error message
+//             //TODO: if client is browser, redirect.            
+//             return res.redirect(`${config.extServices().auth}/login`);            
+//         }                
+//         const authTokenForHeader = req.cookies["authservice_token"] || req.headers.authorization;
                 
-        const options = {
-            method: "GET",
-            headers: {"Authorization": `Bearer ${authTokenForHeader}`}        
-        };
+//         const options = {
+//             method: "GET",
+//             headers: {"Authorization": `Bearer ${authTokenForHeader}`}        
+//         };
         
-        const authRes = await fetch(`${extServices().auth}/auth`, options);
-        console.log("Result Status: %s | Result redirected from %s", authRes.status, authRes.url);
+//         const authRes = await fetch(`${config.extServices().auth}/auth`, options);
+//         console.log("Result Status: %s | Result redirected from %s", authRes.status, authRes.url);
         
-        if(authRes.status === 400 || authRes.status === 401){
-            const error = new Error("Credentials are not valid for access to this resource.");
-            error.httpStatusCode = authRes.status;        
-            throw error;
-        }        
-        next();        
-    }catch(e){
-        console.log("There was an error authorizing resources with the authz server.  Error: %s", e);                
-        res.redirect(`${extServices().auth}/login`);
-    }
-}
+//         if(authRes.status === 400 || authRes.status === 401){
+//             const error = new Error("Credentials are not valid for access to this resource.");
+//             error.httpStatusCode = authRes.status;        
+//             throw error;
+//         }        
+//         next();        
+//     }catch(e){
+//         console.log("There was an error authorizing resources with the authz server.  Error: %s", e);                
+//         res.redirect(`${config.extServices().auth}/login`);
+//     }
+// }
 
 async function isTokenAuthedToRscStandAlone(req, res, next){
     try{        
@@ -48,7 +48,7 @@ async function isTokenAuthedToRscStandAlone(req, res, next){
         
         const identityToValidate = req.cookies["authservice_token"] || req.headers.authorization.split(" ")[1];
         console.log(identityToValidate);
-        const validationResult = await jwtVerify(identityToValidate, secrets().jwtSecret)
+        const validationResult = await jwtVerify(identityToValidate, config.secrets().jwtSecret)
             .catch(e => {
                 console.error("JWT token verification failed. Error: %s", e);            
             });                       
